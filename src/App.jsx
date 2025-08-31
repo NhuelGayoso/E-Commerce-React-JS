@@ -1,14 +1,12 @@
-import { NavBar } from "./components/NavBar";
-import { ItemListContainer } from "./components/ItemListContainer";
+import { Route, Routes } from "react-router-dom";
+import { HomePage } from "./pages/HomePage";
+import { Ecommerce } from "./pages/E-commerce";
 
 export const App = () => {
-
-  const navItems = ["Inicio", "E-Commerce", "Contacto", "Acerca de nosotros"];
-
   return (
-    <>
-      <NavBar links={navItems}/>
-      <ItemListContainer mensaje={"Hola a todos"}/>
-    </>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/ecommerce" element={<Ecommerce />} />
+    </Routes>
   );
 };

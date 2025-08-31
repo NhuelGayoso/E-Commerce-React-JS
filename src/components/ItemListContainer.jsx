@@ -1,45 +1,42 @@
-import products from "./mock.json";
+import { useState, useEffect } from "react";
 
-export const ItemListContainer = ({ mensaje }) => {
+export const ItemListContainer = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch(`https://fakestoreapi.com/products`)
+      .then((response) => response.json())
+      .then((data) => setData(data));
+  }, []);
+
   return (
-    <div className="md px-10">
-      
-
-      <div class="grid grid-cols-3 rounded-lg shadow-sm text-black items-center gap-10">
-        {products.map((elem) => {
+    <div className="px-20 py-20 bg-gray-300">
+      <div class="grid grid-cols-3 rounded-lg shadow-sm text-black items-center gap-1">
+        {data?.map((item) => {
           return (
-            <div class="p-4 border bg-sky-600 w-full" >
-              <img class="rounded-t-lg" src={elem.imagen} alt=""  />
-
+            <div class="p-4  h-full bg-gray-700 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
+              <div className="relative bg-white rounded-xl">
+                <img
+                  class="w-full h-52 object-contain"
+                  src={item.image}
+                  alt=""
+                />
+              </div>
               <a href="#">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight">
-                  {elem.nombre}
+                  {item.title}
                 </h5>
               </a>
-              <p class="mb-3 font-normal">
-                {elem.descripcion}
-              </p>
-              <a
+              <p class="mb-3 font-normal">{item.description}</p>
+              <button
                 href="#"
-                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors mb-1"
               >
-                ${elem.precio}
-                <svg
-                  class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M1 5h12m0 0L9 1m4 4L9 9"
-                  />
-                </svg>
-              </a>
+                ${item.price}
+              </button>
+              <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors">
+                Add to Cart
+              </button>
             </div>
           );
         })}
